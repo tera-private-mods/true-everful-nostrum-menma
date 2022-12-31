@@ -31,14 +31,20 @@ function NetworkMod(mod) {
     // Load item data
     const { nostrum } = mod.clientMod;
 
+    // Nostrum usage
+    let nostrum_items = new Map();
+
+    let item_cooldowns = {};
+
+    function itemCooldown(id) {
+        return Math.max(0, (item_cooldowns[mod.game.me.gameId].get(id) || 0) - Date.now());
+    }
+
     // Abnormality tracking
     function abnormalityDuration(id) {
         const abnormality = mod.game.me.abnormalities[id];
         return abnormality ? abnormality.remaining : 0n;
     }
-
-    // Nostrum usage
-    let nostrum_items = new Map();
 
     mod.hook('S_PREMIUM_SLOT_DATALIST', 2, event => {
         event.sets.forEach(set => {
@@ -63,6 +69,10 @@ function NetworkMod(mod) {
         nostrum_items.clear();
     });
 
+    mod.hook("S_START_COOLTIME_ITEM", 1, event => {
+        item_cooldowns[mod.game.me.gameId].set(event.item, Date.now() + (event.cooldown * 1000));
+    });
+
     function usePremiumSlot(item) {
         if (!item || mod.game.me.level < item.data.requiredLevel)
             return;
@@ -71,6 +81,9 @@ function NetworkMod(mod) {
     }
 
     function useItem(item) {
+        if (itemCooldown(item) > 0)
+            return;
+
         mod.send('C_USE_ITEM', 3, {
             gameId: mod.game.me.gameId,
             id: item,
@@ -117,7 +130,7 @@ function NetworkMod(mod) {
 
     function useSavage() {
         // Check if a stronger buff is present
-        if (BUFFS_SAVAGE.some(buff => abnormalityDuration(buff) > 0n))
+        if (BUFFS_SAVAGE.some(buff => abnormalityDuration(buff) > BigInt(10 * 1000)))
             return;
 
         // Use savage item
@@ -158,7 +171,15 @@ function NetworkMod(mod) {
         return !!interval;
     }
 
+    mod.game.on('leave_loading_screen', () => {
+        if (!item_cooldowns[mod.game.me.gameId])
+            item_cooldowns[mod.game.me.gameId] = new Map();
+    });
+
     mod.game.on('enter_game', () => {
+        if (!item_cooldowns[mod.game.me.gameId])
+            item_cooldowns[mod.game.me.gameId] = new Map();
+
         start();
     });
 
