@@ -2,8 +2,9 @@
 
 const DefaultSettings = {
     "enabled": true,
+    "nostrum_item": 280060,
+    "use_savage": false,
     "hide_duration": true,
-    "hide_message": true,
     "keep_resurrection_invincibility": false,
     "dungeon_only": false,
     "civil_unrest": false,

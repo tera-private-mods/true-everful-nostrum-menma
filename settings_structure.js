@@ -1,17 +1,26 @@
 module.exports = [
     {
         "key": "enabled",
-        "name": "Enable mod",
+        "name": "Enable module",
+        "type": "bool"
+    },
+    {
+        "key": "nostrum_item",
+        "name": "Nostrum item for use",
+        "type": "select",
+        "options": [
+            { "name": "Menma's Brave Multi-Nostrum", "key": 280060 },
+            { "name": "Menma's Strong Multi-Nostrum", "key": 280061 }
+        ]
+    },
+    {
+        "key": "use_savage",
+        "name": "Use Tempestuous Savage Draught",
         "type": "bool"
     },
     {
         "key": "hide_duration",
         "name": "Hide duration of nostrum buff",
-        "type": "bool"
-    },
-    {
-        "key": "hide_message",
-        "name": "Hide nostrum item usage message",
         "type": "bool"
     },
     {
