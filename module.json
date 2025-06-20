@@ -1,10 +1,10 @@
 {
     "name": "true-everful-nostrum-menma",
     "author": "Caali / HSDN",
-    "description": "Ensures that your Everful Nostrum/Noctenium is up 100% of the time (for Menma's TERA buffs).",
+    "description": "Ensures that your Everful Nostrum/Noctenium is up 100% of the time (for Agaia, Glow Games and Arborea Reborn servers).",
     "options": {
         "cliName": "TEN",
-        "guiName": "True Everful Nostrum for Menma's TERA",
+        "guiName": "True Everful Nostrum (All In One)",
         "settingsVersion": 4,
         "settingsFile": "config.json",
         "settingsMigrator": "settings_migrator.js"
