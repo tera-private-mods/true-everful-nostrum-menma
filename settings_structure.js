@@ -6,11 +6,11 @@ module.exports = [
     },
     {
         "key": "nostrum_item",
-        "name": "Nostrum item for use",
+        "name": "Nostrum item for use (Agaia Online only)",
         "type": "select",
         "options": [
-            { "name": "Menma's Brave Multi-Nostrum", "key": 280060 },
-            { "name": "Menma's Strong Multi-Nostrum", "key": 280061 }
+            { "name": "Brave Multi-Nostrum", "key": 280060 },
+            { "name": "Strong Multi-Nostrum", "key": 280061 }
         ]
     },
     {

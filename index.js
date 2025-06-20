@@ -1,10 +1,34 @@
+/* eslint-disable no-undef */
 // Nostrum
-const ITEMS_NOSTRUM = [152898, 184659, 201005, 201006, 201007, 201008, 201022, 855604];
-const BUFFS_NOSTRUM = [4020, 4021, 4022, 4023, 4030, 4031, 4032, 4044];
+const ITEMS_NOSTRUM = [
+    420001, // Reborn Multi-Nostrum
+    152898, 184659, 201005, // Everful Nostrum
+    201006, // 30-Day Everful Nostrum
+    201007, // 7-Day Everful Nostrum
+    201008, // 1-Day Everful Nostrum
+    201022, // Elite Everful Nostrum
+    200999, // Prime Everful Nostrum
+    855604,
+    200998, // Major Everful Nostrum
+    200997 // Minor Everful Nostrum
+];
 
-// Premium Nostrum (Menma)
-const ITEMS_NOSTRUM_PREMIUM = [280060, 280061];
-const BUFFS_NOSTRUM_PREMIUM = [70244, 70243, 70245, 70228, 70233, 70232];
+// Premium Nostrum (MT/Agaia/ArboreaReborn)
+const ITEMS_NOSTRUM_PREMIUM = [
+    420007, // Reborn Multi-Nostrum (VIP)
+    280060, // Brave Multi-Nostrum
+    280061, // Strong Multi-Nostrum
+    207546, // Multi-Nostrum
+    184659, 201005 // Everful Nostrum
+];
+
+const BUFFS_NOSTRUM = [
+    900008, // Reborn Multi-Nostrum
+    4020, 4021, 4024, 4025, // Prime Battle Solution, (Guide)
+    4030, 4031, 4032, 4033, 4040, // Everful Nostrum
+    4041, 4042, 4043, // Multi-Nostrum
+    6090, 6091, 6092 // Blessing of Wisdom
+];
 
 // Tempestuous Savage Draught
 const ITEM_SAVAGE = 150942;
@@ -32,9 +56,9 @@ function NetworkMod(mod) {
     const { nostrum } = mod.clientMod;
 
     // Nostrum usage
-    let nostrum_items = new Map();
+    const nostrum_items = new Map();
 
-    let item_cooldowns = {};
+    const item_cooldowns = {};
 
     function itemCooldown(id) {
         return Math.max(0, (item_cooldowns[mod.game.me.gameId].get(id) || 0) - Date.now());
@@ -69,12 +93,12 @@ function NetworkMod(mod) {
         nostrum_items.clear();
     });
 
-    mod.hook("S_START_COOLTIME_ITEM", 1, event => {
+    mod.hook('S_START_COOLTIME_ITEM', 1, event => {
         item_cooldowns[mod.game.me.gameId].set(event.item, Date.now() + (event.cooldown * 1000));
     });
 
     function usePremiumSlot(item) {
-        if (!item || mod.game.me.level < item.data.requiredLevel)
+        if (!item || !item.data || mod.game.me.level < item.data.requiredLevel)
             return;
 
         mod.send('C_USE_PREMIUM_SLOT', 1, item.packet);
@@ -92,7 +116,7 @@ function NetworkMod(mod) {
             amount: 1,
             dest: new Vec3(0, 0, 0),
             loc: new Vec3(0, 0, 0),
-            w: 0, 
+            w: 0,
             unk1: 0,
             unk2: 0,
             unk3: 0,
@@ -105,15 +129,26 @@ function NetworkMod(mod) {
         if ((mod.settings.keep_resurrection_invincibility && abnormalityDuration(BUFF_RES_INVINCIBLE) > 0n) || abnormalityDuration(BUFF_PHOENIX) > 0n)
             return;
 
-        const nostrum_item = nostrum_items.get(parseInt(mod.settings.nostrum_item));
-
-        // Use premium nostrum
-        if (nostrum_item) {
+        // Use MT/Agaia premium nostrum
+        const mt_nostrum_item = nostrum_items.get(parseInt(mod.settings.nostrum_item));
+        if (mt_nostrum_item) {
             // Check if we need to use everful nostrum
-            if (!BUFFS_NOSTRUM_PREMIUM.some(buff => abnormalityDuration(buff) > BigInt(60 * 1000)))
-                usePremiumSlot(nostrum_item);
+            if (!BUFFS_NOSTRUM.some(buff => abnormalityDuration(buff) > BigInt(60 * 1000)))
+                usePremiumSlot(mt_nostrum_item);
 
             return;
+        }
+
+        // Search and use another premium nostrum
+        for (const item of ITEMS_NOSTRUM_PREMIUM) {
+            const premium_slot = nostrum_items.get(item);
+            if (premium_slot) {
+                // Check if we need to use everful nostrum
+                if (!BUFFS_NOSTRUM.some(buff => abnormalityDuration(buff) > BigInt(60 * 1000)))
+                    usePremiumSlot(premium_slot);
+
+                return;
+            }
         }
 
         // Search in inventory and use nostrum item (no premium)
@@ -199,7 +234,7 @@ function NetworkMod(mod) {
             if (ui) {
                 ui.show();
                 if (ui.ui.window) {
-                    ui.ui.window.webContents.on("did-finish-load", () => {
+                    ui.ui.window.webContents.on('did-finish-load', () => {
                         ui.ui.window.webContents.executeJavaScript(
                             "!function(){var e=document.getElementById('close-btn');e.style.cursor='default',e.onclick=function(){window.parent.close()}}();"
                         );
@@ -243,6 +278,6 @@ function NetworkMod(mod) {
             }
         };
     }
-};
+}
 
 module.exports = { ClientMod, NetworkMod };

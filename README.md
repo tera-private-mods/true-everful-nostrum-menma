@@ -1,8 +1,8 @@
-# true-everful-nostrum-menma
+# True Everful Nostrum (All In One)
 
-Reworked version of module [True Everful Nostrum](https://github.com/tera-toolbox-mods/true-everful-nostrum) for the Menma's TERA server.
+Reworked version of module [True Everful Nostrum](https://github.com/tera-toolbox-mods/true-everful-nostrum) for the MT, Agaia, Glow Games and Arborea Reborn servers.
 
-Mod which ensures that your Everful Nostrum buffs (as well as related buffs) is up 100% of the time.   
+Mod which ensures that your Everful Nostrum buffs (as well as related buffs) is up 100% of the time.  
 There is also the features of automatic use of Tempestuous Savage Draught.
 
 ## Commands
