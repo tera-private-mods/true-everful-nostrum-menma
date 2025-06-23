@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-// Nostrum
+// Nostrum items
 const ITEMS_NOSTRUM = [
     420001, // Reborn Multi-Nostrum
     152898, 184659, 201005, // Everful Nostrum
@@ -13,7 +13,7 @@ const ITEMS_NOSTRUM = [
     200997 // Minor Everful Nostrum
 ];
 
-// Premium Nostrum (MT/Agaia/ArboreaReborn)
+// Premium Nostrum items (MT/Agaia/ArboreaReborn)
 const ITEMS_NOSTRUM_PREMIUM = [
     420007, // Reborn Multi-Nostrum (VIP)
     280060, // Brave Multi-Nostrum
@@ -22,16 +22,29 @@ const ITEMS_NOSTRUM_PREMIUM = [
     184659, 201005 // Everful Nostrum
 ];
 
+// Nostrum buffs
 const BUFFS_NOSTRUM = [
     900008, // Reborn Multi-Nostrum
     4020, 4021, 4024, 4025, // Prime Battle Solution, (Guide)
     4030, 4031, 4032, 4033, 4040, // Everful Nostrum
     4041, 4042, 4043, // Multi-Nostrum
-    6090, 6091, 6092 // Blessing of Wisdom
+    6090, 6091, 6092, // Blessing of Wisdom
 ];
 
-// Tempestuous Savage Draught
+// Food buffs
+const BUFFS_FOOD = [
+    // 70228, // Fish Soup
+    // 70232, // Fish Steak
+    // 70233, // Fish Fritters
+    70243, // Spicy Fish Buffet
+    70244, // Hot Fish Buffet
+    70245 // Salty Fish Buffet
+];
+
+// Tempestuous Savage Draught item
 const ITEM_SAVAGE = 150942;
+
+// Tempestuous Savage Draught buffs
 const BUFFS_SAVAGE = [1251];
 
 // Other buffs
@@ -132,8 +145,8 @@ function NetworkMod(mod) {
         // Use MT/Agaia premium nostrum
         const mt_nostrum_item = nostrum_items.get(parseInt(mod.settings.nostrum_item));
         if (mt_nostrum_item) {
-            // Check if we need to use everful nostrum
-            if (!BUFFS_NOSTRUM.some(buff => abnormalityDuration(buff) > BigInt(60 * 1000)))
+            // Check if we need to use MT/Agaia premium nostrum
+            if (!BUFFS_FOOD.some(buff => abnormalityDuration(buff) > BigInt(60 * 1000)))
                 usePremiumSlot(mt_nostrum_item);
 
             return;
@@ -259,7 +272,7 @@ function NetworkMod(mod) {
     if (global.TeraProxy.GUIMode) {
         ui = new SettingsUI(mod, require('./settings_structure'), mod.settings, {
             width: 750,
-            height: 280,
+            height: 285,
             resizable: false
         });
         ui.on('update', settings => {
