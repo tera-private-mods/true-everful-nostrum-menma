@@ -2,7 +2,7 @@
 
 const DefaultSettings = {
     "enabled": true,
-    "nostrum_item": 280060,
+    "nostrum_item": 207546,
     "use_savage": false,
     "hide_duration": true,
     "keep_resurrection_invincibility": false,
