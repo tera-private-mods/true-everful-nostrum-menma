@@ -13,12 +13,13 @@ const ITEMS_NOSTRUM = [
     200997 // Minor Everful Nostrum
 ];
 
-// Premium Nostrum items (MT/Agaia/ArboreaReborn)
+// Premium Nostrum items (Asura/Agaia/ArboreaReborn)
 const ITEMS_NOSTRUM_PREMIUM = [
+    89067, // Multi-Nostrum: Power (Asura)
+    207546, // Multi-Nostrum / Multi-Nostrum: Crit (Asura)
     420007, // Reborn Multi-Nostrum (VIP)
-    280060, // Brave Multi-Nostrum
-    280061, // Strong Multi-Nostrum
-    207546, // Multi-Nostrum
+    280060, // Brave Multi-Nostrum (Agaia)
+    280061, // Strong Multi-Nostrum (Agaia)
     184659, 201005 // Everful Nostrum
 ];
 
@@ -28,7 +29,7 @@ const BUFFS_NOSTRUM = [
     4020, 4021, 4024, 4025, // Prime Battle Solution, (Guide)
     4030, 4031, 4032, 4033, 4040, // Everful Nostrum
     4041, 4042, 4043, // Multi-Nostrum
-    6090, 6091, 6092, // Blessing of Wisdom
+    6090, 6091, 6092 // Blessing of Wisdom
 ];
 
 // Food buffs
@@ -272,7 +273,7 @@ function NetworkMod(mod) {
     if (global.TeraProxy.GUIMode) {
         ui = new SettingsUI(mod, require('./settings_structure'), mod.settings, {
             width: 750,
-            height: 285,
+            height: 287,
             resizable: false
         });
         ui.on('update', settings => {
