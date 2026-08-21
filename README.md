@@ -1,6 +1,6 @@
 # True Everful Nostrum (All In One)
 
-Reworked version of module [True Everful Nostrum](https://github.com/tera-toolbox-mods/true-everful-nostrum) for the Asura, Agaia and Arborea Reborn servers.
+Reworked version of module [True Everful Nostrum](https://github.com/tera-toolbox-mods/true-everful-nostrum) for the Starscape, Asura, Agaia and Arborea Reborn servers.
 
 Mod which ensures that your Everful Nostrum buffs (as well as related buffs) is up 100% of the time.  
 There is also the features of automatic use of Tempestuous Savage Draught.
