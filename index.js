@@ -13,10 +13,12 @@ const ITEMS_NOSTRUM = [
     200997 // Minor Everful Nostrum
 ];
 
-// Premium Nostrum items (Asura/Agaia/ArboreaReborn)
+// Premium Nostrum items (Starscape/Asura/Agaia/Arborea Reborn)
 const ITEMS_NOSTRUM_PREMIUM = [
     89067, // Multi-Nostrum: Power (Asura)
     207546, // Multi-Nostrum / Multi-Nostrum: Crit (Asura)
+    207548, // Strong Bravery Multi-Nostrum (Starscape)
+    207549, // Strong Canephora Multi-Nostrum (Starscape)
     420007, // Reborn Multi-Nostrum (VIP)
     280060, // Brave Multi-Nostrum (Agaia)
     280061, // Strong Multi-Nostrum (Agaia)
@@ -29,8 +31,17 @@ const BUFFS_NOSTRUM = [
     4020, 4021, 4024, 4025, // Prime Battle Solution, (Guide)
     4030, 4031, 4032, 4033, 4040, // Everful Nostrum
     4041, 4042, 4043, // Multi-Nostrum
+    4054, // Strong Bravery Multi-Nostrum (Starscape)
+    4061, // Strong Canephora Multi-Nostrum (Starscape)
     6090, 6091, 6092 // Blessing of Wisdom
 ];
+
+// Starscape premium nostrums share Superior Noctenium (4048), so track an
+// effect unique to each item to support switching between selected variants.
+const BUFFS_NOSTRUM_PREMIUM = {
+    207548: [4054],
+    207549: [4061]
+};
 
 // Food buffs
 const BUFFS_FOOD = [
@@ -143,11 +154,13 @@ function NetworkMod(mod) {
         if ((mod.settings.keep_resurrection_invincibility && abnormalityDuration(BUFF_RES_INVINCIBLE) > 0n) || abnormalityDuration(BUFF_PHOENIX) > 0n)
             return;
 
-        // Use MT/Agaia premium nostrum
-        const mt_nostrum_item = nostrum_items.get(parseInt(mod.settings.nostrum_item));
+        // Use the selected server-specific premium nostrum
+        const selected_nostrum_id = parseInt(mod.settings.nostrum_item);
+        const mt_nostrum_item = nostrum_items.get(selected_nostrum_id);
         if (mt_nostrum_item) {
-            // Check if we need to use MT/Agaia premium nostrum
-            if (!BUFFS_FOOD.some(buff => abnormalityDuration(buff) > BigInt(60 * 1000)))
+            // Check the selected item's server-specific buff when known
+            const tracked_buffs = BUFFS_NOSTRUM_PREMIUM[selected_nostrum_id] || BUFFS_FOOD;
+            if (!tracked_buffs.some(buff => abnormalityDuration(buff) > BigInt(60 * 1000)))
                 usePremiumSlot(mt_nostrum_item);
 
             return;

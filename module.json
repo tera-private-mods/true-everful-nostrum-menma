@@ -1,7 +1,7 @@
 {
     "name": "true-everful-nostrum-menma",
     "author": "Caali / HSDN",
-    "description": "Ensures that your Everful Nostrum/Noctenium is up 100% of the time (for Agaia, Asura and Arborea Reborn servers).",
+    "description": "Ensures that your Everful Nostrum/Noctenium is up 100% of the time (for Starscape, Agaia, Asura and Arborea Reborn servers).",
     "options": {
         "cliName": "TEN",
         "guiName": "True Everful Nostrum (All In One)",
@@ -11,5 +11,5 @@
     },
     "conflicts": ["true-everful-nostrum","essentials"],
     "servers": ["https://raw.githubusercontent.com/tera-private-mods/true-everful-nostrum-menma/master/"],
-    "disableAutoUpdate": false
+    "disableAutoUpdate": true
 }
