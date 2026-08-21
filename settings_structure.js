@@ -6,11 +6,13 @@ module.exports = [
     },
     {
         "key": "nostrum_item",
-        "name": "Nostrum item for use (Asura/Agaia Online only)",
+        "name": "Nostrum item for use (Asura/Agaia/Starscape Online only)",
         "type": "select",
         "options": [
             { "name": "Multi-Nostrum: Power (Asura)", "key": 89067 },
             { "name": "Multi-Nostrum: Crit (Asura)", "key": 207546 },
+            { "name": "Strong Bravery Multi-Nostrum (Starscape)", "key": 207548 },
+            { "name": "Strong Canephora Multi-Nostrum (Starscape)", "key": 207549 },
             { "name": "Brave Multi-Nostrum (Agaia Online)", "key": 280060 },
             { "name": "Strong Multi-Nostrum (Agaia Online)", "key": 280061 }
         ]
